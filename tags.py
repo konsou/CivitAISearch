@@ -4,6 +4,7 @@ from typing import TypedDict, NotRequired
 from urllib.parse import urljoin
 
 import dotenv
+import eel
 import requests
 
 import settings
@@ -56,12 +57,15 @@ def save_tags_to_cache(tags: list[Tag]):
         json.dump(tags, f, ensure_ascii=False, indent=4)
 
 
+@eel.expose
 def load_tags_from_cache() -> list[Tag]:
     print(f"Loading tags from cache")
     with open(
         os.path.join(settings.CACHE_DIR, "tags.json"), "r", encoding="utf-8"
     ) as f:
-        return json.load(f)
+        tags = json.load(f)
+    print(f"Loaded {len(tags)} tags")
+    return tags
 
 
 if __name__ == "__main__":

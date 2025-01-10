@@ -1,5 +1,7 @@
 import eel
 
+import tags
+
 
 def main():
     eel.init("web_gui")
