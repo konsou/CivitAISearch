@@ -1,0 +1,4 @@
+Eel~=0.18
+
+python-dotenv
+black
