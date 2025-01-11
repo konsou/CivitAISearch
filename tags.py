@@ -18,7 +18,15 @@ class Tag(TypedDict):
     link: NotRequired[str]
 
 
-def get_all_tags() -> list[Tag]:
+def get_tags() -> list[Tag]:
+    # Problem: will timeout
+    try:
+        return load_tags_from_cache()
+    except FileNotFoundError:
+        return fetch_all_tags()
+
+
+def fetch_all_tags() -> list[Tag]:
     """There are like 100k+ tags, this takes a while..."""
     url = urljoin(settings.BASE_URL, "tags")
     all_tags = []
@@ -69,5 +77,5 @@ def load_tags_from_cache() -> list[Tag]:
 
 
 if __name__ == "__main__":
-    tags = get_all_tags()
+    tags = fetch_all_tags()
     save_tags_to_cache(tags)
