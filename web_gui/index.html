@@ -4,10 +4,19 @@
     <meta charset="UTF-8">
     <title>Civitai search</title>
     <script type="text/javascript" src="/eel.js"></script>
-    <script type="text/javascript" src="js/tags.js" defer></script>
+    <script type="module" src="js/tags.js" defer></script>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <h1>Hello World</h1>
-    <div id="tags">No tags loaded</div>
+    <div id="tags-loaded">No tags loaded</div>
+    <div id="search">
+        <label for="search-tag-input">Search for tags</label><br />
+        <input id="search-tag-input" type="text"><br />
+        <label for="search-tag-autocomplete">Matching tags</label><br />
+        <div id="search-tag-autocomplete"></div><br />
+        <label for="search-tags-selected">Selected tags</label><br />
+        <div id="search-tags-selected"></div><br />
+    </div>
 </body>
 </html>
