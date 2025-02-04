@@ -1,4 +1,13 @@
+import { Tag } from './types.js'
+
+type NodeChildren = {
+
+}
+
 class TrieNode {
+    children: Record<string, TrieNode>;
+    isEndOfWord: boolean;
+    tag: Tag | null;
     constructor() {
         this.children = {};
         this.isEndOfWord = false;
@@ -7,11 +16,12 @@ class TrieNode {
 }
 
 export class TagTrie {
+    private root: TrieNode;
     constructor() {
         this.root = new TrieNode();
     }
 
-    insert(tag) {
+    insert(tag: Tag) {
         let currentNode = this.root;
 
         for (const char of tag.name.toLowerCase()) {
@@ -25,7 +35,7 @@ export class TagTrie {
         currentNode.tag = tag;
     }
 
-    search(prefix) {
+    search(prefix: string) {
         // Navigate to prefix node
         const prefixNode = this._findNode(prefix);
         if (!prefixNode) {
@@ -34,10 +44,10 @@ export class TagTrie {
 
         // Collect and sort all words under this node
         const results = this._collectWords(prefixNode);
-        return results.sort((a, b) => b.modelCount - a.modelCount);
+        return results.sort((a: Tag, b: Tag) => (b.modelCount || 0) - (a.modelCount || 0));
     }
 
-    _findNode(prefix) {
+    _findNode(prefix: string) {
         let currentNode = this.root;
 
         for (const char of prefix.toLowerCase()) {
@@ -50,11 +60,11 @@ export class TagTrie {
         return currentNode;
     }
 
-    _collectWords(node) {
-        const results = [];
+    _collectWords(node: TrieNode): Tag[] {
+        const results: Tag[] = [];
 
         // Add this node's tag if it's a complete word
-        if (node.isEndOfWord) {
+        if (node.isEndOfWord && node.tag) {
             results.push(node.tag);
         }
 
